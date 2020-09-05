@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<!-- CSS stylesheets -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/static.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/results.css') }}">
+		<!-- JavaScripts -->
+		<script type="text/javascript" src="{{ url_for('static', filename='js/primary.js') }}"></script>
+		<!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        
+		<!-- Icons -->
+		<script src="https://kit.fontawesome.com/deef0bf4ed.js" crossorigin="anonymous"></script>
+		
+		<title>SeatScore</title>
+    </head>
+    
+    <body>
+
+        <div id="navbar">
+            <a class="logo-link" href="/"><img class="logo-img" src="static/imgs/logo.png"></a>
+            <a class="navlink" href="/stats">Statistics</a>
+            <a class="navlink" href="/settings">Settings</a>
+        </div>
+
+        <div id="wrap" style="overflow-x: hidden; overflow-y: scroll;">
+            <br>
+            <h1>Attendance Results ({{ results["day"] }})</h1>
+            <br>
+            <button class="button" onclick="openEmailModal()" style="font-size: 28px; padding: 10px 30px;">Generate Report</button>
+            <br><br>
+
+            <h1 style="font-weight: 400;"><b>{{ results["num_present"] }}</b> students present ({{ (results["num_present"] / (results["num_present"] + results["num_absent"]) * 100)|round }}%)</h1>
+            <h1 style="font-weight: 400;"><b>{{ results["num_absent"] }}</b> students absent ({{ (results["num_absent"] / (results["num_present"] + results["num_absent"]) * 100)|round }}%):</h1>
+            <br>
+            <ul style="text-align: left; padding-left: 475px;">
+                {% for absentee in results["absent"] %}
+                    <li>
+                        <h3 style="display: inline-block;">{{ absentee["name"] }}</h3>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div id="emailModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeEmailModal()">&times;</span>
+                <h1 style="font-size: 32px;">Written Report</h1>
+                <p id="report" style="font-size: 24px">
+                    In the class of {{ results["day"] }}, there were {{ results["num_present"] }} students present
+                    and {{ results["num_absent"] }} students absent. The absentees consist of: {{ results["absent_list"] }}.
+                </p>
+                <br>
+                <button class="button" onclick="copyReport()" style="font-size: 28px; padding: 10px 30px;">Copy to Clipboard</button>
+            </div>
+        </div>
+
+    </body>
+</html>

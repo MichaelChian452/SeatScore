@@ -1,0 +1,18 @@
+.student-div {
+    text-align: left;
+    padding: 20px;
+    width: 80%;
+    border-radius: 20px;
+    height: 130px;
+    background-color: rgb(105, 90, 201);
+    color: white;
+    margin: auto;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.2s;
+}
+
+.student-div:hover {
+    box-shadow: 0 10px 20px 5 rgba(0, 0, 0, 0.2);
+    transform: scale(1.025);
+}

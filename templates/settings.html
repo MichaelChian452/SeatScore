@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<!-- CSS stylesheets -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/static.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+		<!-- JavaScripts -->
+		<script type="text/javascript" src="{{ url_for('static', filename='js/primary.js') }}"></script>
+		<!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        
+		<!-- Icons -->
+		<script src="https://kit.fontawesome.com/deef0bf4ed.js" crossorigin="anonymous"></script>
+		
+		<title>SeatScore</title>
+    </head>
+    
+    <body>
+
+        <div id="navbar">
+            <a class="logo-link" href="/"><img class="logo-img" src="static/imgs/logo.png"></a>
+            <a class="navlink" href="/stats">Statistics</a>
+            <a class="navlink active" href="/settings">Settings</a>
+        </div>
+
+        <div id="wrap" style="overflow-x: hidden; overflow-y: scroll;">
+            <br>
+            <h1>Class Roster</h1>
+            <br>
+
+            {% for student in roster %}
+                <div class="student-div">
+                    <h1>{{ student["name"] }}</h1>
+                    <h4 style="font-weight: 400;">{{ student["num_absences"] }} absences</h4>
+                    <div style="float: right; margin-top: -75px;">
+                        <a onclick="removeStudent('/delete:{{ student['id'] }}')" target="blank" class="icon negative" style="display: inline-block;">
+                            <div>
+                                <i class="fa fa-user-minus" aria-hidden="true"></i>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+            
+            <br>
+            <h2>Add Student</h2>
+            <br>
+            <form action="{{ url_for('settings') }}" method="post">
+                <div class="form-group">
+                    <div style="text-align: left;">
+                        <input type="text" class="form-control" id="inviteField" name="name" placeholder="Name of Student" required style="width: 500px; margin: auto; margin-left: 225px;">
+                        <button class="button" type="submit" style="float: right; margin-top: -50px; margin-right: 225px; font-size: 32px; padding: 5px 20px;"><a class="submit-link" style="color: white;">Add</a></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>
