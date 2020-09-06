@@ -33,13 +33,18 @@
             <h1>Statistics</h1>
             <br>
 
-            {% for absence in absences %}
-                <div class="absence-div">
-					<h1>{{ absence["absentee"]["name"] }}</h1>
-					<h4 style="font-weight: 400;">Absent on {{absence["day"] }}</h4>
-                </div>
-            {% endfor %}
-            
+            {% if absences|length == 0 %}
+                <br><br><br><br><br><br><br>
+                <h3 style="font-style: italic; color: rgb(105, 90, 201);">Nothing to show!</h3>
+            {% else %}
+                {% for absence in absences %}
+                    
+                    <div class="absence-div">
+                        <h1>{{ absence["absentee"]["name"] }}</h1>
+                        <h4 style="font-weight: 400;">Absent on {{absence["day"] }}</h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
 
     </body>
