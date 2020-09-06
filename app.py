@@ -255,23 +255,35 @@ def settings():
     global roster, absences
 
     if request.method == "POST":
-        name = request.form["name"]
 
-        for c in name:
-            if str(c) == "_":
-                name = name[0:name.find(c)] + " " + name[name.find(c) + 1:]
-                break
+        if "name" in request.form:
 
-        new_student = {
-            "name": name,
-            "num_absences": 0,
-            "id": len(roster)
-        }
+            name = request.form["name"]
 
-        roster.append(new_student)
-    
+            for c in name:
+                if str(c) == "_":
+                    name = name[0:name.find(c)] + " " + name[name.find(c) + 1:]
+                    break
+
+            new_student = {
+                "name": name,
+                "num_absences": 0,
+                "id": len(roster)
+            }
+
+            roster.append(new_student)
+        elif "az" in request.form:
+            roster.sort(key = sortAlphabet)
+    else:
+        roster.sort(key = sortAbsences, reverse = True)
 
     return render_template("settings.html")
+
+def sortAlphabet(person):
+    return person["name"][ :person["name"].find(' ')]
+
+def sortAbsences(person):
+    return person["num_absences"]
 
 @app.route("/delete:<id>")
 def delete(id):
